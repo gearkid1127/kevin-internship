@@ -5,6 +5,7 @@ import Message from "../Message"; // reusable loading/error UI
 import { fetchHotCollections } from "../../api"; // calls your env-based endpoint
 import AuthorImage from "../../images/author_thumbnail.jpg"; // fallback
 import nftImage from "../../images/nftImage.jpg"; // fallback
+import CarouselOwl from "../UI/CarouselOwl"; // reusable carousel component
 
 const HotCollections = () => {
   // 1) Local state for data + UI status
@@ -61,42 +62,44 @@ const HotCollections = () => {
             </div>
           </div>
 
-          {collections.map((collection) => (
-            <div
-              className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-              key={collection.id}
-            >
-              <div className="nft_coll">
-                <div className="nft_wrap">
-                  <Link to="/item-details">
-                    <img
-                      src={collection.nftImage || nftImage}
-                      className="lazy img-fluid"
-                      alt={collection.title || "NFT Collection"}
-                    />
-                  </Link>
-                </div>
+          {/* ⬇️ Owl carousel wrapper, shows 4 at a time, moves 1 per click */}
+          <div className="col-12">
+            <CarouselOwl>
+              {collections.map((collection) => (
+                <div key={collection.id} className="item">
+                  <div className="nft_coll">
+                    <div className="nft_wrap">
+                      <Link to="/item-details">
+                        <img
+                          src={collection.nftImage || nftImage}
+                          className="lazy img-fluid"
+                          alt={collection.title || "NFT Collection"}
+                        />
+                      </Link>
+                    </div>
 
-                <div className="nft_coll_pp">
-                  <Link to="/author">
-                    <img
-                      className="lazy pp-coll"
-                      src={collection.authorImage || AuthorImage}
-                      alt={collection.author || "Author"}
-                    />
-                  </Link>
-                  <i className="fa fa-check"></i>
-                </div>
+                    <div className="nft_coll_pp">
+                      <Link to="/author">
+                        <img
+                          className="lazy pp-coll"
+                          src={collection.authorImage || AuthorImage}
+                          alt={collection.author || "Author"}
+                        />
+                      </Link>
+                      <i className="fa fa-check"></i>
+                    </div>
 
-                <div className="nft_coll_info">
-                  <Link to="/explore">
-                    <h4>{collection.title || "Untitled"}</h4>
-                  </Link>
-                  <span>{collection.code || "ERC-192"}</span>
+                    <div className="nft_coll_info">
+                      <Link to="/explore">
+                        <h4>{collection.title || "Untitled"}</h4>
+                      </Link>
+                      <span>{collection.code || "ERC-192"}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              ))}
+            </CarouselOwl>
+          </div>
         </div>
       </div>
     </section>
