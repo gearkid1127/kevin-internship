@@ -6,7 +6,7 @@ import AuthorImage from "../../images/author_thumbnail.jpg"; // fallback
 import nftImage from "../../images/nftImage.jpg"; // fallback
 import CarouselOwl from "../UI/CarouselOwl"; // reusable carousel component
 import Skeleton from "../UI/Skeleton"; // (skeleton loading state)
-
+import Message from "../Message.jsx"; // for error display with retry
 
 const HotCollections = () => {
   // 1) Local state for data + UI status
@@ -36,38 +36,41 @@ const HotCollections = () => {
   }, []);
 
   if (loading) {
-  return (
-    <section id="section-collections" className="no-bottom">
-      <div className="container">
-        <div className="text-center">
-          <h2>Hot Collections</h2>
-          <div className="small-border bg-color-2"></div>
-        </div>
+    return (
+      <section id="section-collections" className="no-bottom">
+        <div className="container">
+          <div className="text-center">
+            <h2>Hot Collections</h2>
+            <div className="small-border bg-color-2"></div>
+          </div>
 
-        {/* four skeleton cards to mirror your 4-up carousel */}
-        <div className="row" style={{ marginTop: "1rem" }}>
-          {[0, 1, 2, 3].map((i) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={i}>
-              <div className="nft_coll">
-                {/* image placeholder */}
-                <Skeleton width="100%" height="220px" borderRadius="12px" />
-                <div className="nft_coll_info" style={{ marginTop: "0.75rem" }}>
-                  {/* title line */}
-                  <Skeleton width="70%" height="18px" borderRadius="6px" />
-                  {/* code line */}
-                  <div style={{ marginTop: "0.5rem" }}>
-                    <Skeleton width="40%" height="14px" borderRadius="6px" />
+          <div className="row">
+            {[0, 1, 2, 3].map((i) => (
+              <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={i}>
+                <div className="nft_coll">
+                  <Skeleton />
+                  <div className="nft_coll_info">
+                    <Skeleton />
+                    <Skeleton />
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    );
+  }
+if (error) {
+  return (
+    <Message
+      title="Hot Collections"
+      text={error}
+      actionLabel="Retry"
+      onAction={loadData}
+    />
   );
 }
-
 
   // 5) Main render — map real API data into your existing markup
   return (
@@ -82,7 +85,7 @@ const HotCollections = () => {
           </div>
 
           {/* ⬇️ Owl carousel wrapper, shows 4 at a time, moves 1 per click */}
-          <div className="col-12">
+          <div className="owl-stage">
             <CarouselOwl>
               {collections.map((collection) => (
                 <div key={collection.id} className="item">
