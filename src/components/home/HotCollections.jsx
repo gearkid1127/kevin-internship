@@ -1,11 +1,12 @@
 // src/components/home/HotCollections.jsx
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Message from "../Message"; // reusable loading/error UI
 import { fetchHotCollections } from "../../api"; // calls your env-based endpoint
 import AuthorImage from "../../images/author_thumbnail.jpg"; // fallback
 import nftImage from "../../images/nftImage.jpg"; // fallback
 import CarouselOwl from "../UI/CarouselOwl"; // reusable carousel component
+import Skeleton from "../UI/Skeleton"; // (skeleton loading state)
+
 
 const HotCollections = () => {
   // 1) Local state for data + UI status
@@ -34,21 +35,39 @@ const HotCollections = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 4) Early returns for loading/error (clean and reusable)
   if (loading) {
-    return <Message title="Hot Collections" text="Loading…" />;
-  }
+  return (
+    <section id="section-collections" className="no-bottom">
+      <div className="container">
+        <div className="text-center">
+          <h2>Hot Collections</h2>
+          <div className="small-border bg-color-2"></div>
+        </div>
 
-  if (error) {
-    return (
-      <Message
-        title="Hot Collections"
-        text={error}
-        actionLabel="Retry"
-        onAction={loadData}
-      />
-    );
-  }
+        {/* four skeleton cards to mirror your 4-up carousel */}
+        <div className="row" style={{ marginTop: "1rem" }}>
+          {[0, 1, 2, 3].map((i) => (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={i}>
+              <div className="nft_coll">
+                {/* image placeholder */}
+                <Skeleton width="100%" height="220px" borderRadius="12px" />
+                <div className="nft_coll_info" style={{ marginTop: "0.75rem" }}>
+                  {/* title line */}
+                  <Skeleton width="70%" height="18px" borderRadius="6px" />
+                  {/* code line */}
+                  <div style={{ marginTop: "0.5rem" }}>
+                    <Skeleton width="40%" height="14px" borderRadius="6px" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
   // 5) Main render — map real API data into your existing markup
   return (
