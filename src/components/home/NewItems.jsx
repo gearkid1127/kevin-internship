@@ -7,6 +7,7 @@ import { fetchNewItems } from "../../api"; // calls your env-based endpoint
 import CarouselOwl from "../UI/CarouselOwl"; // reusable carousel component
 import Skeleton from "../UI/Skeleton"; // (skeleton loading state)
 import Message from "../Message";
+import Countdown from "../UI/Countdown";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -90,7 +91,7 @@ const NewItems = () => {
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
-
+                        <Countdown endTime={item.expiryDate} />
                         <div className="nft__item_wrap">
                           <Link to="/item-details">
                             <img
