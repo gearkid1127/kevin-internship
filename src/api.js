@@ -11,3 +11,8 @@ export async function fetchNewItems() {
   const res = await axios.get(url);
   return res.data;
 }
+export async function fetchTopSellers() {
+  const url = process.env.REACT_APP_TOP_SELLERS_URL;
+  const res = await axios.get(url);
+  return res.data;
+}
