@@ -16,3 +16,13 @@ export async function fetchTopSellers() {
   const res = await axios.get(url);
   return res.data;
 }
+
+
+export async function fetchExplore(filter) {
+  const url = process.env.REACT_APP_EXPLORE_URL;
+  const res = await axios.get(url, {
+    params: filter ? { filter } : {},
+  });
+  return res.data;
+}
+
