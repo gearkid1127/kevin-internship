@@ -91,7 +91,7 @@ if (error) {
                 <div key={collection.id} className="item">
                   <div className="nft_coll">
                     <div className="nft_wrap">
-                      <Link to="/item-details">
+                      <Link to={`/author/${collection.authorId}`}>
                         <img
                           src={collection.nftImage || nftImage}
                           className="lazy img-fluid"

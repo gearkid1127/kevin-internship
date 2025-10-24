@@ -33,4 +33,10 @@ export async function fetchAuthorById(id) {
   const res = await axios.get(url, { params: { author: id } });
   return res.data;
 }
-
+export async function fetchItemDetails(id) {
+  const url =
+    process.env.REACT_APP_ITEM_DETAILS_URL ||
+    "https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails";
+  const res = await axios.get(url, { params: { nftId: id } });
+  return res.data;
+}
