@@ -93,7 +93,7 @@ const NewItems = () => {
                         </div>
                         <Countdown endTime={item.expiryDate} />
                         <div className="nft__item_wrap">
-                          <Link to="/item-details">
+                          <Link to={`/item-details/${item?.nftId || item?.id}`}>
                             <img
                               src={item.nftImage || nftImage}
                               className="lazy nft__item_preview"
