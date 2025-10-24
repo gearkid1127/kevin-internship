@@ -88,9 +88,9 @@ if (error) {
           <div className="owl-stage">
             <CarouselOwl>
               {collections.map((collection) => (
-                <div key={collection.id} className="item">
+                <div key={collection.id} className="item" >
                   <div className="nft_coll">
-                    <div className="nft_wrap">
+                    <div className="nft_wrap" data-aos="fade-up">
                       <Link to={`/author/${collection.authorId}`}>
                         <img
                           src={collection.nftImage || nftImage}
@@ -100,7 +100,7 @@ if (error) {
                       </Link>
                     </div>
 
-                    <div className="nft_coll_pp">
+                    <div className="nft_coll_pp" data-aos="fade-up">
                       <Link to={`/author/${collection.authorId}`}>
                         <img
                           className="lazy pp-coll"

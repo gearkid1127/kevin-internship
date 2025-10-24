@@ -80,8 +80,8 @@ const NewItems = () => {
                 <CarouselOwl>
                   {items.map((item) => (
                     <div className="item" key={item.id}>
-                      <div className="nft__item">
-                        <div className="author_list_pp">
+                      <div className="nft__item" data-aos="fade-up">
+                        <div className="author_list_pp" data-aos="fade-up">
                           <Link to={`/author/${item.authorId}`}>
                             <img
                               className="lazy"
