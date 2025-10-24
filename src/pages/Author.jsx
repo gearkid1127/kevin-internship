@@ -4,11 +4,13 @@ import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import { fetchAuthorById } from "../api";
+import Skeleton from "../components/UI/Skeleton";
 
 const Author = () => {
   const { id } = useParams();
   const [author, setAuthor] = React.useState(null);
   const [copied, setCopied] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const [isFollowing, setIsFollowing] = React.useState(false);
   const [followersCount, setFollowersCount] = React.useState(0);
@@ -25,14 +27,16 @@ const Author = () => {
     let cancelled = false;
 
     (async () => {
+      setLoading(true);
       const data = await fetchAuthorById(id);
       const authorData = Array.isArray(data) ? data[0] : data;
-      console.log("author fetched", { id, data: authorData });
       if (!cancelled) setAuthor(authorData);
+
       const followKey = `follow:${id}`;
       const saved = localStorage.getItem(followKey) === "1";
       setIsFollowing(saved);
       setFollowersCount((authorData?.followers || 0) + (saved ? 1 : 0));
+      setLoading(false);
     })();
 
     return () => {
@@ -69,6 +73,30 @@ const Author = () => {
             background: `url(${AuthorBanner}) top`,
           }}
         ></section>
+        {loading ? (
+          <section id="author" className="no-top no-bottom">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12 text-center">
+                  <div className="profile_avatar">
+                    <Skeleton />
+                    <div className="profile_name mt-3">
+                      <Skeleton />
+                    </div>
+                  </div>
+                  <div className="profile_follow mt-3">
+                    <Skeleton />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : (
+          // existing profile header markup (your real author info)
+          <section id="author" className="no-top no-bottom">
+            {/* keep your original header structure here exactly as it was */}
+          </section>
+        )}
 
         <section aria-label="section">
           <div className="container">
@@ -77,7 +105,7 @@ const Author = () => {
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={author?.authorImage || AuthorImage} alt="" />
+                      <img src={author?.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
@@ -120,7 +148,11 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems items={author?.nftCollection || []} />
+                  <AuthorItems
+                    items={author?.nftCollection || []}
+                    loading={loading}
+                    authorImage={author?.authorImage}
+                  />
                 </div>
               </div>
             </div>

@@ -82,7 +82,7 @@ const NewItems = () => {
                     <div className="item" key={item.id}>
                       <div className="nft__item">
                         <div className="author_list_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${item.authorId}`}>
                             <img
                               className="lazy"
                               src={item.authorImage || AuthorImage}
