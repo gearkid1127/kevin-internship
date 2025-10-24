@@ -69,7 +69,7 @@ const TopSellers = () => {
               // ---- Real data from API ----
               <ol className="author_list">
                 {sellers.map((s) => (
-                  <li key={s.id}>
+                  <li key={s.id} data-aos="fade-up">
                     <div className="author_list_pp">
                       <Link to="/author">
                         <img

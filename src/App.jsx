@@ -5,8 +5,32 @@ import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      disable: false,
+      startEvent: "DOMContentLoaded",
+      initClassName: "aos-init",
+      animatedClassName: "aos-animate",
+      useClassNames: false,
+      disableMutationObserver: false,
+      debounceDelay: 50,
+      throttleDelay: 99,
+
+      offset: 120,
+      delay: 0,
+      duration: 600, // you can tweak this
+      easing: "ease",
+      once: true, // animate only once
+      mirror: false,
+      anchorPlacement: "top-bottom",
+    });
+  }, []);
+
   return (
     <Router>
       <Nav />
