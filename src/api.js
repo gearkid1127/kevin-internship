@@ -26,3 +26,11 @@ export async function fetchExplore(filter) {
   return res.data;
 }
 
+export async function fetchAuthorById(id) {
+  const url =
+    process.env.REACT_APP_AUTHOR_URL ||
+    "https://us-central1-nft-cloud-functions.cloudfunctions.net/authors";
+  const res = await axios.get(url, { params: { author: id } });
+  return res.data;
+}
+
